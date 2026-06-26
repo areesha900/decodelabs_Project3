@@ -45,10 +45,10 @@ cos(θ) = (A · B) / (‖A‖ × ‖B‖)
  
 ---
   
-## ⚙️ Requirements
+## 🔧 Requirements
 
 - **Python 3.10+**
-- **No external libraries** - uses only Python's built-in `math`, and `collections`
+- **No external libraries** - uses only Python's built-in `math` and `collections`
   
 ---
 
