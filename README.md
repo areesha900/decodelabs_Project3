@@ -2,18 +2,7 @@
 
 ## 📌 Project Overview
 
-This is a **content-based filtering recommendation engine** that maps a user's raw skills to the most relevant tech career paths. You enter your skills, and the system mathematically ranks job roles by how closely they match your profile.
-
----
-
-## 🔍 Key Concepts Demonstrated
-
-- **Content-Based Filtering** vs Collaborative Filtering
-- **Vector Space Model** — representing skills as numerical arrays
-- **TF-IDF Weighting** — rewarding specific, rare skills over generic ones
-- **Cosine Similarity** — magnitude-invariant similarity measurement
-- **Cold Start Handling** — guarded against zero-vector profiles
-- **Top-N Filtering** — preventing choice overload
+A **content-based filtering recommendation engine** that maps a user's skills to the most relevant tech career paths using TF-IDF weighting and cosine similarity.
 
 ---
 
@@ -25,7 +14,7 @@ User Skills → TF-IDF Vectorisation → Cosine Similarity Scoring → Top-N Out
 
 ---
 
-## 🧠 How the Algorithm Works
+## 🧠 How it Works
 
 ### 1. Ingestion (Input)
 The script accepts a minimum of **3 user skills** to ensure enough data density for accurate matching.
@@ -57,11 +46,43 @@ Results are sorted in **descending order** by similarity score, then truncated t
 
 ---
 
+ 
+| Step | What happens |
+|------|-------------|
+| **Ingestion** | User enters skills as a comma-separated list |
+| **TF-IDF Vectorisation** | Skills are transformed into weighted numerical vectors |
+| **Cosine Similarity** | Each job role is scored against the user's profile |
+| **Top-N Filtering** | Results are sorted and truncated to prevent choice overload |
+
+---
+
+
+### TF-IDF Weighting
+ 
+| Component | Formula | Purpose |
+|-----------|---------|---------|
+| TF | `count(term) / total_terms` | Rewards skills central to a role |
+| IDF | `log(N / df)` | Penalises generic skills like `git` or `python` |
+| TF-IDF | `TF × IDF` | Specific, rare skills score higher |
+ 
+### Cosine Similarity
+ 
+```
+cos(θ) = (A · B) / (‖A‖ × ‖B‖)
+```
+| Score | Meaning |
+|-------|---------|
+| `1.0` | Perfect match |
+| `0.5` | Moderate overlap |
+| `0.0` | No shared characteristics |
+ 
+---
+  
 ## ⚙️ Requirements
 
 - **Python 3.10+**
-- **No external libraries** — uses only Python's built-in `math`, `csv`, and `collections` modules
-
+- **No external libraries** - uses only Python's built-in `math`, and `collections`
+  
 ---
 
 ## 🚀 How to Run
@@ -76,6 +97,40 @@ python3 recommender.py
 ```
 
 ### Example Session
+
+```
+Enter your skills (comma-separated): python, machine learning, tensorflow
+ 
+────────────────────────────────────────────────────────────
+                  TOP CAREER RECOMMENDATIONS
+────────────────────────────────────────────────────────────
+ 
+  🥇  Machine Learning Engineer   ●●●●●●●●●●●●●●○○○○○○  73.2%
+  🥈  AI Research Engineer        ●●●●●●●●●●●○○○○○○○○○  58.1%
+  🥉  Data Scientist              ●●●●●●●●○○○○○○○○○○○○  41.7%
+ 
+────────────────────────────────────────────────────────────
+                     FULL LEADERBOARD
+────────────────────────────────────────────────────────────
+ 
+  #1   Machine Learning Engineer   ●●●●●●●●●●●●●●○○○○○○  73.2%
+  #2   AI Research Engineer        ●●●●●●●●●●●○○○○○○○○○  58.1%
+  #3   Data Scientist              ●●●●●●●●○○○○○○○○○○○○  41.7%
+  #4   Full Stack Developer        ●●●●●○○○○○○○○○○○○○○○  27.3%
+  ...
+ 
+────────────────────────────────────────────────────────────
+                   USER PROFILE VECTOR
+────────────────────────────────────────────────────────────
+ 
+  tensorflow                ●●●●●●●●●●●●○○○○○○○○  0.1993
+  machine learning          ●●●●●●●●●○○○○○○○○○○○  0.1493
+  python                    ●●●●●○○○○○○○○○○○○○○○  0.0599
+ 
+────────────────────────────────────────────────────────────
+```
+ 
+---
 
 ```
 ╔══════════════════════════════════════════════════════╗
